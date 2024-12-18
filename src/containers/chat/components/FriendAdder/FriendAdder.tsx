@@ -35,6 +35,18 @@ const FriendAdder = ({ open, onClose }: Props) => {
       username: searchFilter || undefined,
     };
   }, [searchFilter, user.id]);
+
+  // set an event listener for escape key to close the modal
+  React.useEffect(() => {
+    const evenCallBack = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose?.();
+    };
+
+    document.addEventListener("keydown", evenCallBack);
+    return () => {
+      document.removeEventListener("keydown", evenCallBack);
+    };
+  }, [onClose]);
   const {
     data: users,
     isLoading,
