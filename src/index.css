@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  --primary: red;
+  --secondary: white;
+}
+
+body {
+  @apply text-gray-900;
+}
