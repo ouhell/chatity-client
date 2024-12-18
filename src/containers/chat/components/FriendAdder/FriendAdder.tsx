@@ -3,7 +3,7 @@ import useGetUsers from "@/hooks/api/queries/useGetUsers";
 import { FetchUsersFilter } from "@/types/api/requests/users";
 import { cn } from "@/utils/libs/classNames";
 import { debounce } from "lodash";
-import { Loader2, Search, X } from "lucide-react";
+import { File, Loader2, Search, UsersRound, X } from "lucide-react";
 import { AnimatePresence, motion as m } from "motion/react";
 import React from "react";
 import UserAvatar from "../UserAvatar/UserAvatar";
@@ -52,7 +52,7 @@ const FriendAdder = ({ open, onClose }: Props) => {
           className={cn("fixed top-0 left-0 right-0 bottom-0 z-[100]", {})}
         >
           <m.div
-            className="h-full bg-slate-200/30 p-4 backdrop-blur-sm"
+            className="h-full bg-slate-200/30 p-4 backdrop-blur-sm overflow-x-auto"
             onClick={() => {
               onClose?.();
             }}
@@ -69,8 +69,8 @@ const FriendAdder = ({ open, onClose }: Props) => {
                 e.stopPropagation();
               }}
             >
-              <div className="h-20 p-4 flex justify-between">
-                <div></div>
+              <div className=" p-4 flex justify-between items-center">
+                <div className="text-xl font-semibold">Add Friends</div>
                 <button
                   onClick={() => {
                     onClose?.();
@@ -81,17 +81,17 @@ const FriendAdder = ({ open, onClose }: Props) => {
                 </button>
               </div>
 
-              <div className="mt-4 ">
+              <div className=" ">
                 <div className="flex gap-4 items-center px-8 ">
                   <input
                     type="search"
-                    className="w-full rounded px-1.5 py-1.5 outline outline-1 outline-slate-200 hover:outline-slate-300 focus-within:outline-2 focus-within:outline-slate-400 transition-colors"
+                    className="w-full rounded px-1.5 py-1.5 outline outline-1 outline-slate-200 hover:outline-slate-300 focus-within:outline-2 focus-within:outline-slate-300 transition-colors"
                     placeholder="Search"
                     onChange={(e) => {
                       setSearchFilter(e.target.value);
                     }}
                   />
-                  <button className="px-2 py-1.5 border rounded text-slate-500">
+                  <button className="px-2 py-1.5 border rounded text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors">
                     {isFetching ? (
                       <Loader2 className="size-5 animate-spin" />
                     ) : (
@@ -99,7 +99,7 @@ const FriendAdder = ({ open, onClose }: Props) => {
                     )}
                   </button>
                 </div>
-                <div className="p-4">
+                <div className="p-4 min-h-40 relative">
                   {!!searchFilter && !!users && !!users.length && (
                     <div className="p-4">
                       {users.map((user) => {
@@ -123,14 +123,32 @@ const FriendAdder = ({ open, onClose }: Props) => {
                   )}
 
                   {!!searchFilter && !!users && !users.length && (
-                    <div>Empty</div>
+                    <div className=" flex gap-2  items-center absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-lg opacity-70">
+                      <span>
+                        <File />
+                      </span>
+                      <span>Empty</span>
+                    </div>
                   )}
 
                   {!!searchFilter && !users && isLoading && (
-                    <div>Loading....</div>
+                    <div className="absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-lg ">
+                      Loading....
+                    </div>
                   )}
-                  {!!searchFilter && !users && isError && <div>Error</div>}
-                  {!searchFilter && <div>Search Users</div>}
+                  {!!searchFilter && !users && isError && (
+                    <div className="absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-red-500">
+                      Error
+                    </div>
+                  )}
+                  {!searchFilter && (
+                    <div className="flex items-center gap-2 absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 opacity-80">
+                      <span>
+                        <UsersRound />
+                      </span>
+                      <span>Search Users</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </m.div>
