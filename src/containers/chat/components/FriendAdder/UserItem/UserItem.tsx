@@ -6,6 +6,8 @@ import React from "react";
 import UserAvatar from "../../UserAvatar/UserAvatar";
 import { AxiosError } from "axios";
 import FriendRequestBtn from "./FriendRequestBtn/FriendRequestBtn";
+import FriendRequestHandler from "./FriendRequestHandler/FriendRequestHandler";
+import { Check, CheckCheck } from "lucide-react";
 
 type Props = {
   data: UserResp;
@@ -28,7 +30,16 @@ const UserItem = ({ data }: Props) => {
     second: data.id,
   });
 
+  const friendShip = React.useMemo(() => {
+    return friends?.find(
+      (fr) => fr.friendA.id === data.id || fr.friendB.id === data.id
+    );
+  }, [friends, data]);
+
   const noRequest =
+    !friendShip &&
+    !isFriendsError &&
+    !isLoadingFriends &&
     !isLoadingRequest &&
     isRequestError &&
     !request &&
@@ -46,7 +57,18 @@ const UserItem = ({ data }: Props) => {
         </div>
         <div>{data.username}</div>
       </div>
-      <div className="flex">{noRequest && <FriendRequestBtn />}</div>
+      <div className="flex">
+        {!!friendShip && (
+          <div className="flex items-center opacity-70">
+            <span>Friend</span>
+            <span>
+              <CheckCheck className="size-4" />
+            </span>
+          </div>
+        )}
+        {noRequest && <FriendRequestBtn />}
+        {!!request && <FriendRequestHandler data={request} />}
+      </div>
     </div>
   );
 };

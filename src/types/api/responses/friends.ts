@@ -5,3 +5,9 @@ export type FriendShipResp = {
   friendB: UserResp;
   conversationId: string;
 };
+
+export type FriendRequestResp = {
+  senderId: string;
+  receiverId: string;
+  createdAt: string;
+};
