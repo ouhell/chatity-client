@@ -46,7 +46,7 @@ const FriendsTab = () => {
           onClick={() => {
             setOpenAdder(true);
           }}
-          className="py-1 px-1.5  rounded text-slate-600 hover:text-slate-800  outline outline-1 outline-slate-200 hover:outline-slate-400 active:outline-slate-600  transition-colors "
+          className="py-1 px-1.5 focus-visible:outline-2 focus-visible:outline-slate-800  rounded text-slate-600 hover:text-slate-800  outline outline-1 outline-slate-200 hover:outline-slate-400 active:outline-slate-600  transition-colors "
         >
           <Plus className="size-5 " />
         </button>

@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { motion as m } from "motion/react";
 import InputError from "../InputError/InputError";
 import useCredentialLogin from "@/hooks/api/mutations/useCredentialLogin";
+
+type Props = {
+  onSwitch: () => void;
+};
 
 type LoginFormData = {
   identifier: string;
@@ -10,7 +13,7 @@ type LoginFormData = {
   remmember: boolean;
 };
 
-const LoginForm = () => {
+const LoginForm = ({ onSwitch }: Props) => {
   const { register, handleSubmit, getValues, formState } =
     useForm<LoginFormData>({
       values: {
@@ -104,11 +107,9 @@ const LoginForm = () => {
             remember me?
           </label>
         </div>
-        <div>
-          <Link to={"/signup"} className="text-gray-500 hover:underline">
-            dont have an account?
-          </Link>
-        </div>
+        <button type="button" className="hover:underline" onClick={onSwitch}>
+          dont have an account?
+        </button>
       </div>
       <div>
         <m.button
