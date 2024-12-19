@@ -7,6 +7,7 @@ import { File, Loader2, Search, UsersRound, X } from "lucide-react";
 import { AnimatePresence, motion as m } from "motion/react";
 import React from "react";
 import UserAvatar from "../UserAvatar/UserAvatar";
+import UserItem from "./UserItem/UserItem";
 type Props = {
   open: boolean;
   onClose?: () => void;
@@ -58,24 +59,34 @@ const FriendAdder = ({ open, onClose }: Props) => {
   });
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="sync">
       {open ? (
         <m.div
           className={cn("fixed top-0 left-0 right-0 bottom-0 z-[100]", {})}
+          exit={{
+            opacity: 0,
+          }}
         >
           <m.div
-            className="h-full bg-slate-200/30 p-4 backdrop-blur-sm overflow-x-auto"
+            className="h-full  p-4 backdrop-blur-sm overflow-x-auto"
             onClick={() => {
               onClose?.();
             }}
           >
             <m.div
-              //   initial={{
-              //     y: -200,
-              //   }}
-              //   animate={{
-              //     y: 0,
-              //   }}
+              initial={{
+                // position: "absolute",
+                scale: 0,
+              }}
+              animate={{
+                // position: "initial",
+                scale: 1,
+              }}
+              exit={{
+                // position: "absolute",
+                scale: 0,
+                opacity: 0,
+              }}
               className="min-h-40 bg-white rounded border max-w-[40rem] mx-auto mt-20"
               onClick={(e) => {
                 e.stopPropagation();
@@ -115,21 +126,7 @@ const FriendAdder = ({ open, onClose }: Props) => {
                   {!!searchFilter && !!users && !!users.length && (
                     <div className="p-4">
                       {users.map((user) => {
-                        return (
-                          <div
-                            key={user.id}
-                            className="flex gap-4 items-center p-4 border rounded"
-                          >
-                            <div>
-                              <UserAvatar
-                                username={user.username}
-                                img={user.imgUrl}
-                                size={2.7}
-                              />
-                            </div>
-                            <div>{user.username}</div>
-                          </div>
-                        );
+                        return <UserItem data={user} key={user.id} />;
                       })}
                     </div>
                   )}

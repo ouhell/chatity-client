@@ -15,10 +15,8 @@ const useGoogleLogin = () => {
     mutationFn: () => {
       return fn();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: getSessionKey(),
-      });
+    onSuccess: (resp) => {
+      queryClient.setQueryData(getSessionKey(), () => resp);
     },
   });
 };

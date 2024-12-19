@@ -27,6 +27,7 @@ const LoginForm = ({ onSwitch }: Props) => {
   const { errors } = formState;
   return (
     <form
+      autoComplete="off"
       onSubmit={handleSubmit(
         (data) => {
           console.log("form data", data);

@@ -9,10 +9,8 @@ const useCredentialLogin = () => {
     mutationFn: (request: CredentialLoginRequest) => {
       return credentialLogin(request);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: getSessionKey(),
-      });
+    onSuccess: (resp) => {
+      queryClient.setQueryData(getSessionKey(), () => resp);
     },
   });
 };

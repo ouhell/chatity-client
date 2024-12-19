@@ -23,7 +23,7 @@ export const deleteUserSession = () => {
 };
 
 export const credentialLogin = (request: CredentialLoginRequest) => {
-  return axios({
+  return axios<SessionResp>({
     url: API_URL_V1 + "/auth/login",
     method: "post",
     data: request,
@@ -36,5 +36,6 @@ export const credentialSignUp = (request: CredentialSignUpRequest) => {
     url: API_URL_V1 + "/auth/signup",
     data: request,
     withCredentials: true,
+    method: "post",
   });
 };

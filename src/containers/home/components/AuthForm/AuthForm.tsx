@@ -6,7 +6,11 @@ const AuthForm = () => {
   const [newAcc, setNewAcc] = React.useState(false);
 
   return newAcc ? (
-    <SignUpForm />
+    <SignUpForm
+      onSwitch={() => {
+        setNewAcc(false);
+      }}
+    />
   ) : (
     <LoginForm
       onSwitch={() => {

@@ -1,17 +1,21 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import InputError from "../InputError/InputError";
 import useSignUp from "@/hooks/api/mutations/useSignUp";
 import { Loader } from "lucide-react";
+
+type Props = {
+  onSwitch: () => void;
+};
 
 type Form = {
   username: string;
   email: string;
   password: string;
   confirm: string;
+  remember: boolean;
 };
 
-const SignUpForm = () => {
+const SignUpForm = ({ onSwitch }: Props) => {
   const { mutateAsync: signup, isPending } = useSignUp();
   const { register, getValues, formState, handleSubmit } = useForm<Form>({
     values: {
@@ -19,18 +23,22 @@ const SignUpForm = () => {
       password: "",
       username: "",
       email: "",
+      remember: false,
     },
   });
 
   const errors = formState.errors;
   return (
     <form
+      autoComplete="off"
       onSubmit={handleSubmit(
         (values) => {
           signup({
             username: values.username,
             email: values.email,
             password: values.password,
+          }).catch((e) => {
+            console.log("error", e);
           });
         },
         () => {
@@ -126,6 +134,21 @@ const SignUpForm = () => {
         {errors.confirm?.message && (
           <InputError>{errors.confirm.message}</InputError>
         )}
+      </div>
+      <div className="flex justify-between">
+        <div>
+          <input
+            {...register("remember")}
+            type="checkbox"
+            id="signin-remember"
+          />
+          <label htmlFor="signin-remember" className="ml-1">
+            remember me?
+          </label>
+        </div>
+        <button type="button" className="hover:underline" onClick={onSwitch}>
+          dont have an account?
+        </button>
       </div>
       <button
         type="submit"
