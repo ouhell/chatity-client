@@ -9,7 +9,7 @@ const fetchFn = fetchUsers;
 
 export type QueryResult = Awaited<ReturnType<typeof fetchFn>>;
 export const getKey = (filter: FetchUsersFilter) => {
-  return ["friends", getFilterKey(filter)];
+  return ["users", getFilterKey(filter)];
 };
 const useGetUsers = (
   filter?: FetchUsersFilter,

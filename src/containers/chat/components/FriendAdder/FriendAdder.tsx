@@ -6,7 +6,6 @@ import { debounce } from "lodash";
 import { File, Loader2, Search, UsersRound, X } from "lucide-react";
 import { AnimatePresence, motion as m } from "motion/react";
 import React from "react";
-import UserAvatar from "../UserAvatar/UserAvatar";
 import UserItem from "./UserItem/UserItem";
 type Props = {
   open: boolean;

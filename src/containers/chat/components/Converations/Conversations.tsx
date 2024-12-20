@@ -1,4 +1,3 @@
-import React from "react";
 import { motion as m } from "motion/react";
 const message = "Enter a conversation and start chatting!";
 

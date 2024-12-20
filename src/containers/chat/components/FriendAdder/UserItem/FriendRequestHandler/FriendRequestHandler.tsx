@@ -1,6 +1,5 @@
 import { useSession } from "@/context/UserSessionContext/UserSessionContext";
 import { FriendRequestResp } from "@/types/api/responses/friends";
-import React from "react";
 
 type Props = {
   data: FriendRequestResp;
