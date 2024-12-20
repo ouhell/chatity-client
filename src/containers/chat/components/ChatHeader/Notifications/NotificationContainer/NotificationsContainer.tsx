@@ -54,7 +54,7 @@ const NotificationsContainer = ({ open, onClose }: Props) => {
           }}
           className="flex flex-col absolute bottom-0 top-full right-1/2  w-[25rem] h-[35rem] bg-white z-20 rounded shadow border p-4"
         >
-          <div className="flex gap-4 justify-center items-center border p-2 rounded">
+          <div className="flex gap-4 justify-center items-center border p-2 rounded font-fun text-lg">
             <button
               onClick={() => {
                 setNotif(true);

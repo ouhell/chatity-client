@@ -7,7 +7,7 @@ const RequestSection = () => {
   return (
     <div className="h-full min-h-fit">
       {!!friendRequests && !!friendRequests.length && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 pt-2">
           {friendRequests.map((req) => {
             return (
               <FriendRequestItem

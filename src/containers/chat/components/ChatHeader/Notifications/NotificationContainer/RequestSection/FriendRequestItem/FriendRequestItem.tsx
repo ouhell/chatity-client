@@ -9,19 +9,31 @@ type Props = {
 
 const FriendRequestItem = ({ data }: Props) => {
   const user = useSession()!.sessionUser!;
-  const otherParty = user.id === data.sender.id ? data.sender : data.receiver;
+  const otherParty = user.id === data.sender.id ? data.receiver : data.sender;
 
   return (
-    <div className="flex justify-between items-center gap-4">
-      <div className="flex">
-        <UserAvatar img={otherParty.imgUrl} username={otherParty.username} />
-        <div>
-          <span className="text-slate-700">{otherParty.username}</span>
-          <span className="text-sm text-slate-500">{otherParty.email}</span>
+    <div className="flex justify-between items-center gap-4 w-full  ">
+      <div className="flex gap-2  overflow-hidden">
+        <div className="mt-2">
+          <UserAvatar
+            img={otherParty.imgUrl}
+            username={otherParty.username}
+            size={3}
+          />
+        </div>
+
+        <div className="max-w-full overflow-hidden  ">
+          <div className="text-slate-700 font-semibold font-fun  text-2xl whitespace-nowrap overflow-ellipsis">
+            {otherParty.username}
+          </div>
+          <div className="text-xs text-slate-500 whitespace-nowrap">
+            {otherParty.email}
+          </div>
         </div>
       </div>
-
-      <FriendRequestActionBtn data={data} />
+      <div className="shrink-0">
+        <FriendRequestActionBtn data={data} />
+      </div>
     </div>
   );
 };

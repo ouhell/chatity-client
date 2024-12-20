@@ -66,7 +66,7 @@ const UserItem = ({ data }: Props) => {
             </span>
           </div>
         )}
-        {noRequest && <FriendRequestBtn />}
+        {noRequest && <FriendRequestBtn receiverId={data.id} />}
         {!!request && <FriendRequestHandler data={request} />}
         {isLoading && (
           <div className="px-4 grid place-items-center text-slate-600">
