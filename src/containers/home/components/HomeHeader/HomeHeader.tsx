@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion as m } from "motion/react";
-import Favicon from "@/../public/favicon.svg";
 const routes = [
   {
     to: "/",
@@ -20,7 +19,7 @@ const HomeHeader = () => {
     <header className="border-b  bg-white p-4 min-h-20 select-none font-fun">
       <div className="flex items-center justify-between gap-2 container mx-auto">
         <div className="text-3xl font-bold flex gap-3 items-center">
-          <img src={Favicon} alt="chatity icon" className="w-8" />
+          <img src={"/favicond.svg"} alt="chatity icon" className="w-8" />
           <span>Chatity</span>
         </div>
         <nav className="flex gap-8">

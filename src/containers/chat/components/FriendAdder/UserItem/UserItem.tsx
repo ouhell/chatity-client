@@ -7,7 +7,7 @@ import UserAvatar from "../../UserAvatar/UserAvatar";
 import { AxiosError } from "axios";
 import FriendRequestBtn from "./FriendRequestBtn/FriendRequestBtn";
 import FriendRequestHandler from "./FriendRequestHandler/FriendRequestHandler";
-import { Check, CheckCheck } from "lucide-react";
+import { CheckCheck, Loader2 } from "lucide-react";
 
 type Props = {
   data: UserResp;
@@ -45,7 +45,7 @@ const UserItem = ({ data }: Props) => {
     !request &&
     error instanceof AxiosError &&
     error.status === 404;
-
+  const isLoading = isLoadingFriends || isLoadingRequest;
   return (
     <div
       key={data.id}
@@ -58,7 +58,7 @@ const UserItem = ({ data }: Props) => {
         <div>{data.username}</div>
       </div>
       <div className="flex">
-        {!!friendShip && (
+        {!!friendShip && !isLoadingFriends && (
           <div className="flex items-center opacity-70">
             <span>Friend</span>
             <span>
@@ -68,6 +68,11 @@ const UserItem = ({ data }: Props) => {
         )}
         {noRequest && <FriendRequestBtn />}
         {!!request && <FriendRequestHandler data={request} />}
+        {isLoading && (
+          <div className="px-4 grid place-items-center text-slate-600">
+            <Loader2 className="size-6 animate-spin" />
+          </div>
+        )}
       </div>
     </div>
   );

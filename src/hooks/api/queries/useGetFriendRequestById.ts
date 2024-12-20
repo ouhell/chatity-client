@@ -11,7 +11,7 @@ const fetchFn = fetchFriendRequestById;
 
 export type QueryResult = Awaited<ReturnType<typeof fetchFn>>;
 export const getKey = (req: FetchFriendRequestByIdRequest) => {
-  return ["friends", getFilterKey(req)];
+  return ["friend-request", getFilterKey(req)];
 };
 const useGetFriendRequestById = (
   req: FetchFriendRequestByIdRequest,

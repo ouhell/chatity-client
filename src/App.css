@@ -44,3 +44,14 @@ body {
 * {
   scroll-behavior: smooth;
 }
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: white;
+  background: gray;
+}
+
+::selection {
+  color: white;
+  background: gray;
+}

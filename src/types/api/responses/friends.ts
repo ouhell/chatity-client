@@ -9,5 +9,7 @@ export type FriendShipResp = {
 export type FriendRequestResp = {
   senderId: string;
   receiverId: string;
+  sender: UserResp;
+  receiver: UserResp;
   createdAt: string;
 };

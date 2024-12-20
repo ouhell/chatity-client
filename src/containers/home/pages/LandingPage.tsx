@@ -1,4 +1,3 @@
-import ConvoHero from "@/../public/svgs/conversation-1.svg";
 import { motion as m } from "motion/react";
 
 const title = "Hello World i am the king of the lands of the free".split("");
@@ -64,7 +63,7 @@ const LandingPage = () => {
               duration: 0.4,
             },
           }}
-          src={ConvoHero}
+          src={"/images/conversation-1"}
           alt="conversation hero"
           className="w-[40rem] mx-auto  -mt-20   "
         />
