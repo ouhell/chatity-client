@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 import React from "react";
 import { FetchFriendsFilter } from "@/types/api/requests/friends";
 import FriendAdder from "../../FriendAdder/FriendAdder";
+import UserAvatar from "../../UserAvatar/UserAvatar";
 const FriendsTab = () => {
   const [search, setSearch] = useState("");
   const setUsernameFilter = React.useMemo(() => {
@@ -56,7 +57,7 @@ const FriendsTab = () => {
         </button>
       </div>
 
-      <div>
+      <div className="py-4">
         {friends &&
           !!friends.length &&
           friends.map((friendship) => {
@@ -65,7 +66,19 @@ const FriendsTab = () => {
                 ? friendship.friendB
                 : friendship.friendA;
 
-            return <div key={friend.id}>{friend.username}</div>;
+            return (
+              <div
+                key={friend.id}
+                className="flex gap-2 p-2 rounded border min-h-16"
+              >
+                <div className="">
+                  <UserAvatar username={friend.username} img={friend.imgUrl} />
+                </div>
+                <div>
+                  <div>{friend.username}</div>
+                </div>
+              </div>
+            );
           })}
 
         {friends && !friends.length && <div>Empty</div>}
