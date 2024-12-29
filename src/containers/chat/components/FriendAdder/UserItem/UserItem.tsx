@@ -1,34 +1,44 @@
-import { useSession } from "@/context/UserSessionContext/UserSessionContext";
-import useGetFriendRequestById from "@/hooks/api/queries/useGetFriendRequestById";
 import useGetFriends from "@/hooks/api/queries/useGetFriends";
 import { UserResp } from "@/types/api/responses/user";
 import React from "react";
 import UserAvatar from "../../UserAvatar/UserAvatar";
-import { AxiosError } from "axios";
 import FriendRequestBtn from "./FriendRequestBtn/FriendRequestBtn";
 import FriendRequestHandler from "./FriendRequestHandler/FriendRequestHandler";
 import { CheckCheck, Loader2 } from "lucide-react";
+import useGetFriendRequests from "@/hooks/api/queries/useGetFriendRequests";
 
 type Props = {
   data: UserResp;
 };
 
 const UserItem = ({ data }: Props) => {
-  const user = useSession()!.sessionUser!;
+  // const user = useSession()!.sessionUser!;
   const {
     data: friends,
     isError: isFriendsError,
     isLoading: isLoadingFriends,
   } = useGetFriends();
+
   const {
-    data: request,
-    error,
-    isError: isRequestError,
+    data: friendRequests,
     isLoading: isLoadingRequest,
-  } = useGetFriendRequestById({
-    first: user.id,
-    second: data.id,
-  });
+    isError: isRequestError,
+  } = useGetFriendRequests();
+  // const {
+  //   data: request,
+  //   error,
+  //   isError: isRequestError,
+  //   isLoading: isLoadingRequest,
+  // } = useGetFriendRequestById({
+  //   first: user.id,
+  //   second: data.id,
+  // });
+
+  const request = React.useMemo(() => {
+    return friendRequests?.find(
+      (req) => req.senderId === data.id || req.receiverId === data.id
+    );
+  }, [friendRequests, data.id]);
 
   const friendShip = React.useMemo(() => {
     return friends?.find(
@@ -41,10 +51,9 @@ const UserItem = ({ data }: Props) => {
     !isFriendsError &&
     !isLoadingFriends &&
     !isLoadingRequest &&
-    isRequestError &&
+    // isRequestError &&
     !request &&
-    error instanceof AxiosError &&
-    error.status === 404;
+    !!friendRequests;
   const isLoading = isLoadingFriends || isLoadingRequest;
   return (
     <div

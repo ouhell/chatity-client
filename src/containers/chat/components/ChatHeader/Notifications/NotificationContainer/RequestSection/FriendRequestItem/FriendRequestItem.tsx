@@ -26,7 +26,7 @@ const FriendRequestItem = ({ data }: Props) => {
           <div className="text-slate-700 font-semibold font-fun  text-2xl whitespace-nowrap overflow-ellipsis">
             {otherParty.username}
           </div>
-          <div className="text-xs text-slate-500 whitespace-nowrap">
+          <div className="text-xs text-slate-500 whitespace-nowrap hover:underline hover:text-slate-600 transition-colors">
             {otherParty.email}
           </div>
         </div>
