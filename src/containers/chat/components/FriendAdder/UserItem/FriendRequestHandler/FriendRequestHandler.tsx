@@ -1,5 +1,6 @@
 import { useSession } from "@/context/UserSessionContext/UserSessionContext";
 import useFriendRequestDelete from "@/hooks/api/mutations/useFriendRequestDelete";
+import useFriendRequestPut from "@/hooks/api/mutations/useFriendRequestPut";
 import { FriendRequestResp } from "@/types/api/responses/friends";
 import { Loader2 } from "lucide-react";
 
@@ -15,12 +16,16 @@ const FriendRequestHandler = ({ data: request }: Props) => {
 
   const { mutateAsync: deleteRequest, isPending: isDeleting } =
     useFriendRequestDelete();
+
+  const { mutateAsync: acceptRequest, isPending: isAccepting } =
+    useFriendRequestPut();
   return (
     <div className="flex gap-4">
       {isSender && (
         <button
+          disabled={isAccepting || isDeleting}
           onClick={() => {
-            if (isDeleting) return;
+            if (isDeleting || isAccepting) return;
             deleteRequest({
               senderId: request.senderId,
               receiverId: request.receiverId,
@@ -38,12 +43,28 @@ const FriendRequestHandler = ({ data: request }: Props) => {
       )}
       {isReceiver && (
         <>
-          <button className="px-2 py-1 rounded bg-teal-700 text-white hover:bg-teal-800 transition-colors opacity-90">
-            Accept
+          <button
+            disabled={isAccepting || isDeleting}
+            onClick={() => {
+              if (isDeleting || isAccepting) return;
+              acceptRequest({
+                senderId: request.senderId,
+                receiverId: request.receiverId,
+              });
+            }}
+            className="flex gap-2 items-center px-2 py-1 rounded bg-teal-700 text-white hover:bg-teal-800 transition-colors opacity-90"
+          >
+            <span>Accept</span>
+            {isAccepting && (
+              <span>
+                <Loader2 className="animate-spin size-4" />
+              </span>
+            )}
           </button>
           <button
+            disabled={isAccepting || isDeleting}
             onClick={() => {
-              if (isDeleting) return;
+              if (isDeleting || isAccepting) return;
               deleteRequest({
                 senderId: request.senderId,
                 receiverId: request.receiverId,

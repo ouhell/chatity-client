@@ -22,7 +22,7 @@ const UserItem = ({ data }: Props) => {
   const {
     data: friendRequests,
     isLoading: isLoadingRequest,
-    isError: isRequestError,
+    // isError: isRequestError,
   } = useGetFriendRequests();
   // const {
   //   data: request,

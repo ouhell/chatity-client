@@ -3,6 +3,7 @@ import { FetchFriendsFilter } from "@/types/api/requests/friends";
 import { getFilterKey } from "@/utils/libs/paramsUtils";
 import { useQuery } from "@tanstack/react-query";
 const fetchFn = fetchFriends;
+export type QueryResult = Awaited<ReturnType<typeof fetchFn>>;
 export const getKey = (filter: FetchFriendsFilter) => {
   return ["friends", getFilterKey(filter)];
 };
