@@ -23,6 +23,10 @@ const FriendsTab = () => {
 
   const session = useSession(true)!;
   const user = session.sessionUser!;
+
+  React.useEffect(() => {
+    console.log("friends", friends);
+  }, [friends]);
   return (
     <div>
       <FriendAdder
