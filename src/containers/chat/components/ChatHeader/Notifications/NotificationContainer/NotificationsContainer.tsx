@@ -34,25 +34,32 @@ const NotificationsContainer = ({ open, onClose }: Props) => {
           ref={container}
           initial={{
             opacity: 0,
-            //   scale: 0.7,
-            y: -20,
+            scale: 0.3,
+            // y: -20,
+            // x: 40,
             //   scale: 1.2,
-            translateX: "50%",
           }}
           animate={{
             opacity: 1,
             scale: 1,
             y: 0,
+            x: 0,
           }}
           exit={{
             scale: 0,
             opacity: 0,
-            y: -500,
-            transition: {
-              duration: 0.3,
-            },
+            // y: -20,
+            // x: 40,
+            // transition: {
+            //   scale: {
+            //     delay: 0.1,
+            //   },
+            // },
           }}
-          className="flex flex-col absolute bottom-0 top-full right-1/2  w-[25rem] h-[35rem] bg-white z-20 rounded shadow border p-4"
+          style={{
+            transformOrigin: "top right",
+          }}
+          className="flex flex-col absolute bottom-0 top-full right-0 max-w-[25rem] min-w-[25rem] w-[25rem] h-[35rem] bg-white z-20 rounded shadow border p-4"
         >
           <div className="flex gap-4 justify-center items-center border p-2 rounded font-fun text-lg">
             <button
