@@ -12,12 +12,10 @@ type Props = {
 const FriendItem = ({ data: friendship }: Props) => {
   const user = useSession()!.sessionUser!;
   const { conversationId } = useParams();
-  const params = useParams();
   const friend =
     user.id === friendship.friendA.id ? friendship.friendB : friendship.friendA;
 
   const isActive = React.useMemo(() => {
-    console.log("convo combo", params);
     return conversationId === friendship.conversationId;
   }, [conversationId, friendship]);
   return (
