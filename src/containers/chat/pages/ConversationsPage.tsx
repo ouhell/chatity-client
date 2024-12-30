@@ -7,6 +7,7 @@ const ConversationsPage = () => {
       <div className="border  flex-1 bg-white rounded mt-4 flex gap-4 p-4">
         <ConversationTabs />
         <div className="w-0.5 bg-gray-400 rounded-lg"></div>
+
         <Conversations />
       </div>
     </main>
