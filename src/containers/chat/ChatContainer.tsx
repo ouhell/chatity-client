@@ -12,7 +12,7 @@ const ChatContainer = () => {
     <div className="min-h-screen flex flex-col ">
       <ChatHeader />
       <Routes>
-        <Route path="/" element={<ConversationsPage />} />
+        <Route path="/*" element={<ConversationsPage />} />
       </Routes>
     </div>
   );

@@ -7,6 +7,7 @@ import React from "react";
 import { FetchFriendsFilter } from "@/types/api/requests/friends";
 import FriendAdder from "../../FriendAdder/FriendAdder";
 import UserAvatar from "../../UserAvatar/UserAvatar";
+import { Link } from "react-router-dom";
 const FriendsTab = () => {
   const [search, setSearch] = useState("");
   const setUsernameFilter = React.useMemo(() => {
@@ -57,29 +58,40 @@ const FriendsTab = () => {
         </button>
       </div>
 
-      <div className="py-4">
-        {friends &&
-          !!friends.length &&
-          friends.map((friendship) => {
-            const friend =
-              user.id === friendship.friendA.id
-                ? friendship.friendB
-                : friendship.friendA;
+      <div className="">
+        {friends && !!friends.length && (
+          <div className="py-4 flex flex-col gap-4">
+            {friends.map((friendship) => {
+              const friend =
+                user.id === friendship.friendA.id
+                  ? friendship.friendB
+                  : friendship.friendA;
 
-            return (
-              <div
-                key={friend.id}
-                className="flex gap-2 p-2 rounded border min-h-16"
-              >
-                <div className="">
-                  <UserAvatar username={friend.username} img={friend.imgUrl} />
-                </div>
-                <div>
-                  <div>{friend.username}</div>
-                </div>
-              </div>
-            );
-          })}
+              return (
+                <Link
+                  key={friend.id}
+                  to={"/conversations/private/" + friendship.conversationId}
+                >
+                  <div className="flex gap-3 items-center p-2 rounded  min-h-16  hover:bg-slate-50 transition-colors">
+                    <div className="">
+                      <UserAvatar
+                        size={3}
+                        username={friend.username}
+                        img={friend.imgUrl}
+                      />
+                    </div>
+                    <div className="h-full  flex-1">
+                      <div className=" text-lg font-semibold">
+                        {friend.username}
+                      </div>
+                      <div className="h-4  font-fun -mt-1"> hello</div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
         {friends && !friends.length && <div>Empty</div>}
         {!friends && isLoading && <div>Loading</div>}
