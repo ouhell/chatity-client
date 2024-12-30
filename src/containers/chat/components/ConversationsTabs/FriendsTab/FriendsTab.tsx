@@ -1,4 +1,3 @@
-import { useSession } from "@/context/UserSessionContext/UserSessionContext";
 import useGetFriends from "@/hooks/api/queries/useGetFriends";
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -6,7 +5,8 @@ import debounce from "lodash/debounce";
 import React from "react";
 import { FetchFriendsFilter } from "@/types/api/requests/friends";
 import FriendAdder from "../../FriendAdder/FriendAdder";
-import UserAvatar from "../../UserAvatar/UserAvatar";
+
+import FriendItem from "./FriendItem/FriendItem";
 const FriendsTab = () => {
   const [search, setSearch] = useState("");
   const setUsernameFilter = React.useMemo(() => {
@@ -21,9 +21,6 @@ const FriendsTab = () => {
     };
   }, [search]);
   const { data: friends, isLoading, isError } = useGetFriends(filter);
-
-  const session = useSession(true)!;
-  const user = session.sessionUser!;
 
   React.useEffect(() => {
     console.log("friends", friends);
@@ -57,29 +54,16 @@ const FriendsTab = () => {
         </button>
       </div>
 
-      <div className="py-4">
-        {friends &&
-          !!friends.length &&
-          friends.map((friendship) => {
-            const friend =
-              user.id === friendship.friendA.id
-                ? friendship.friendB
-                : friendship.friendA;
-
-            return (
-              <div
-                key={friend.id}
-                className="flex gap-2 p-2 rounded border min-h-16"
-              >
-                <div className="">
-                  <UserAvatar username={friend.username} img={friend.imgUrl} />
-                </div>
-                <div>
-                  <div>{friend.username}</div>
-                </div>
-              </div>
-            );
-          })}
+      <div className="">
+        {friends && !!friends.length && (
+          <div className="py-4 flex flex-col gap-4">
+            {friends.map((friendship) => {
+              return (
+                <FriendItem key={friendship.conversationId} data={friendship} />
+              );
+            })}
+          </div>
+        )}
 
         {friends && !friends.length && <div>Empty</div>}
         {!friends && isLoading && <div>Loading</div>}
