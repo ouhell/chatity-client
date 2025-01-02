@@ -152,7 +152,7 @@ const SignUpForm = ({ onSwitch }: Props) => {
       </div>
       <button
         type="submit"
-        className="px-2 text-center py-1.5 rounded bg-slate-700 text-white mt-4 flex items-center gap-3"
+        className="px-2 justify-center text-center py-1.5 rounded bg-slate-700 text-white mt-4 flex items-center gap-3"
       >
         <span>Sign Up</span>
         {isPending && (
