@@ -11,7 +11,7 @@ const PrivateConversation = () => {
   const {
     data: friends,
     isLoading: isLoadingFriends,
-    isError: isErrorFriends,
+    // isError: isErrorFriends,
   } = useGetFriends();
 
   const friendship = React.useMemo(

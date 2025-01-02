@@ -3,10 +3,13 @@ export type MessagePostRequest = {
   conversationId: string;
 };
 
-export type PrivateMessagePostRequest = {
-  friendshipId: {
+export type MessagePostParams = {
+  friendShipId?: {
     friendAId: string;
     friendBId: string;
   };
-  message: MessagePostRequest;
+};
+
+export type MessagesGetFilter = {
+  conversationId: string;
 };

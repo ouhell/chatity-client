@@ -1,5 +1,4 @@
 import { Paperclip, Send, Image, Mic } from "lucide-react";
-import React from "react";
 
 const PrivateConvoInputs = () => {
   return (
