@@ -11,7 +11,7 @@ type Props = {
 
 const PrivateConvoHeader = ({ friendship, friend }: Props) => {
   return (
-    <div className="h-14 border-b flex items-center justify-between ">
+    <div className="h-16 border-b flex items-center justify-between ">
       <div className="flex gap-4">
         <UserAvatar username={friend.username} img={friend.imgUrl} size={2.5} />
         <div>
