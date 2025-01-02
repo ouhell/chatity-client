@@ -1,6 +1,5 @@
 import { FriendShipResp } from "@/types/api/responses/friends";
 import { UserResp } from "@/types/api/responses/user";
-import React from "react";
 import UserAvatar from "../../../UserAvatar/UserAvatar";
 import { Menu } from "lucide-react";
 
@@ -9,9 +8,9 @@ type Props = {
   friend: UserResp;
 };
 
-const PrivateConvoHeader = ({ friendship, friend }: Props) => {
+const PrivateConvoHeader = ({ friend }: Props) => {
   return (
-    <div className="h-14 border-b flex items-center justify-between ">
+    <div className="h-16 border-b flex items-center justify-between ">
       <div className="flex gap-4">
         <UserAvatar username={friend.username} img={friend.imgUrl} size={2.5} />
         <div>
