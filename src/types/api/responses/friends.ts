@@ -3,6 +3,8 @@ import { UserResp } from "./user";
 export type FriendShipResp = {
   friendA: UserResp;
   friendB: UserResp;
+  friendAId: string;
+  friendBId: string;
   conversationId: string;
 };
 

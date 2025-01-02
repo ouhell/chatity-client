@@ -12,7 +12,7 @@ export const postMessage = (
   { friendShipId, ...params }: MessagePostParams
 ) => {
   return axios<MessageResp>({
-    url: API_URL_V1 + `/messges`,
+    url: API_URL_V1 + `/conversations/${request.conversationId}/messages`,
     method: "post",
     data: request,
     withCredentials: true,
@@ -25,7 +25,7 @@ export const postMessage = (
 
 export const fetchMessages = (filter: MessagesGetFilter) => {
   return axios<MessageResp[]>({
-    url: API_URL_V1 + "/messages",
+    url: API_URL_V1 + `/conversations/${filter.conversationId}/messages`,
     method: "get",
     withCredentials: true,
     params: filter,
