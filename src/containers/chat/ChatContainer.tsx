@@ -4,7 +4,7 @@ import ConversationsPage from "./pages/ConversationsPage";
 
 const ChatContainer = () => {
   return (
-    <div className="min-h-screen h-screen max-h-screen flex flex-col bg-yellow-50 ">
+    <div className=" h-screen flex flex-col ">
       <ChatHeader />
       <Routes>
         <Route path="/*" element={<ConversationsPage />} />

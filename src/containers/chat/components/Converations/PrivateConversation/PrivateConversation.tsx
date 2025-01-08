@@ -43,14 +43,14 @@ const PrivateConversation = () => {
   const { mutateAsync: sendMessage } = useMessagePost();
 
   return (
-    <div className="flex-1 flex flex-col  ">
+    <div className="h-full w-full overflow-hidden flex flex-col  ">
       {!!friend && !!friendship && (
-        <div className="flex flex-col justify-between h-full  ">
+        <div className="flex flex-col justify-between h-full  overflow-hidden  ">
           <PrivateConvoHeader friend={friend} friendship={friendship} />
 
-          <div className="h-full overflow-auto p-1">
+          <div className="h-full  max-h-full overflow-auto p-2 ">
             {!!messages?.length && (
-              <div className="flex flex-col gap-2 p-2">
+              <div className="flex flex-col gap-2">
                 {messages.map((msg) => {
                   return (
                     <div key={msg.id} className="border rounded p-2">
