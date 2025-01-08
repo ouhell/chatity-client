@@ -9,17 +9,14 @@ import axios from "axios";
 
 export const postMessage = (
   request: MessagePostRequest,
-  { friendshipId, ...params }: MessagePostParams
+  params: MessagePostParams
 ) => {
   return axios<MessageResp>({
     url: API_URL_V1 + `/conversations/${request.conversationId}/messages`,
     method: "post",
     data: request,
     withCredentials: true,
-    params: {
-      ...friendshipId,
-      ...params,
-    },
+    params: params,
   });
 };
 
