@@ -1,5 +1,12 @@
 export type MessageResp = {
-  id: string;
-  conversationId: string;
   content: string;
+  conversationId: string;
+  createdAt: string;
+  id: string;
+  images: string[];
+  isEdited: boolean;
+  recording: null;
+  recordingId: null;
+  senderId: string;
+  updatedAt: string;
 };

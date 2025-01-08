@@ -5,7 +5,7 @@ import useGetFriends from "@/hooks/api/queries/useGetFriends";
 import { useSession } from "@/context/UserSessionContext/UserSessionContext";
 import PrivateConvoInputs from "./PrivateConvoInputs/PrivateConvoInputs";
 import useMessagePost from "@/hooks/api/mutations/useMessagePost";
-import useGetMessages from "@/hooks/api/queries/useGetMessages";
+import PrivateConversationMessages from "./PrivateConversationMessages/PrivateConversationMessages";
 
 const PrivateConversation = () => {
   const user = useSession()!.sessionUser!;
@@ -19,18 +19,6 @@ const PrivateConversation = () => {
   const friendship = React.useMemo(
     () => friends?.find((fr) => fr.conversationId === conversationId),
     [friends, conversationId]
-  );
-  const { data: messages, isLoading: isLoadingMessages } = useGetMessages(
-    {
-      conversationId: conversationId!,
-      friendshipId: friendship
-        ? {
-            friendAId: friendship.friendAId,
-            friendBId: friendship.friendBId,
-          }
-        : undefined,
-    },
-    { enabled: !!friendship }
   );
 
   const friend = React.useMemo(() => {
@@ -46,30 +34,17 @@ const PrivateConversation = () => {
     <div className="h-full w-full overflow-hidden flex flex-col  ">
       {!!friend && !!friendship && (
         <div className="flex flex-col justify-between h-full  overflow-hidden  ">
-          <PrivateConvoHeader friend={friend} friendship={friendship} />
+          <PrivateConvoHeader
+            friend={friend}
+            friendship={friendship}
+            key={conversationId + "/header"}
+          />
 
-          <div className="h-full  max-h-full overflow-auto p-2 ">
-            {!!messages?.length && (
-              <div className="flex flex-col gap-2">
-                {messages.map((msg) => {
-                  return (
-                    <div key={msg.id} className="border rounded p-2">
-                      {msg.content}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            {!messages?.length && (
-              <div className="h-full grid place-items-center">
-                {isLoadingMessages ? (
-                  <span>loading....</span>
-                ) : (
-                  <span>Empty</span>
-                )}
-              </div>
-            )}
-          </div>
+          <PrivateConversationMessages
+            friendship={friendship}
+            conversationId={conversationId!}
+            key={conversationId + "/messages"}
+          />
 
           <PrivateConvoInputs
             onSendMsg={(content) => {
@@ -95,6 +70,7 @@ const PrivateConversation = () => {
                   console.log("error when sending message", err);
                 });
             }}
+            key={conversationId + "/inputs"}
           />
         </div>
       )}
