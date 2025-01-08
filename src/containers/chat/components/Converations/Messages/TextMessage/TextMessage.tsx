@@ -1,10 +1,9 @@
+import { LocalMessage } from "@/hooks/api/queries/useGetMessages";
 import { SessionUser } from "@/types/api/responses/auth";
-import { MessageResp } from "@/types/api/responses/message";
 import { cn } from "@/utils/libs/classNames";
-import React from "react";
 
 type Props = {
-  data: MessageResp;
+  data: LocalMessage;
   user: SessionUser;
 };
 
@@ -17,6 +16,7 @@ const TextMessage = ({ data: message, user }: Props) => {
         "border  rounded p-2 max-w-[80%] font-fun text-xl text-center w-fit min-w-[4rem]",
         {
           "ml-auto bg-slate-600 text-white": isSender,
+          "animate-pulse": message.temp,
         }
       )}
     >
