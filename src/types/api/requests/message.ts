@@ -4,7 +4,7 @@ export type MessagePostRequest = {
 };
 
 export type MessagePostParams = {
-  friendShipId?: {
+  friendshipId?: {
     friendAId: string;
     friendBId: string;
   };
@@ -12,4 +12,8 @@ export type MessagePostParams = {
 
 export type MessagesGetFilter = {
   conversationId: string;
+  friendshipId?: {
+    friendAId: string;
+    friendBId: string;
+  };
 };

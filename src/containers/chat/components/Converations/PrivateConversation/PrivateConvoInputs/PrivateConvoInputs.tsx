@@ -1,5 +1,6 @@
 // import useMessagePost from "@/hooks/api/mutations/useMessagePost";
 import { Paperclip, Send, Image, Mic } from "lucide-react";
+import React from "react";
 
 type Props = {
   onSendMsg: (content: string) => void;
@@ -7,16 +8,19 @@ type Props = {
 
 const PrivateConvoInputs = ({ onSendMsg }: Props) => {
   // const { mutateAsync: createMessage, isPending } = useMessagePost();
+  const [messageContent, setMessageContent] = React.useState("");
   return (
     <div className="h-14 p-2 border-t shrink-0">
       <form
+        autoComplete="off"
         onSubmit={(e) => {
           e.preventDefault();
-          const formData = new FormData(e.currentTarget);
-          const messageContent = formData.get("message-content") as
-            | string
-            | undefined;
+          // const formData = new FormData(e.currentTarget);
+          // const messageContent = formData.get("message-content") as
+          //   | string
+          //   | undefined;
           const trimmedContent = messageContent?.trim();
+          setMessageContent("");
           if (!trimmedContent) return;
           onSendMsg(trimmedContent);
           console.log("submiting", trimmedContent);
@@ -37,7 +41,12 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
           </div>
           <div className="w-full">
             <input
+              value={messageContent}
+              onChange={(e) => {
+                setMessageContent(e.target.value);
+              }}
               name="message-content"
+              autoComplete="off"
               placeholder="write message"
               className="w-full bg-transparent focus-within:outline-none focus-within:border-none border-none font-fun text-xl"
             />
