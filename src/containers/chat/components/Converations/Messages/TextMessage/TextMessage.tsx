@@ -13,9 +13,12 @@ const TextMessage = ({ data: message, user }: Props) => {
   return (
     <div
       className={cn(
-        "border  rounded p-2 max-w-[80%] font-fun text-xl text-center w-fit min-w-[4rem]",
+        "border   p-2 max-w-[80%] bg-slate-50 font-fun text-xl text-center w-fit min-w-[4rem] ",
         {
-          "ml-auto bg-slate-600 text-white": isSender,
+          "ml-auto bg-slate-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl last:rounded-bl-none":
+            isSender,
+          "rounded-tl-2xl rounded-br-2xl rounded-tr-2xl last:rounded-br-none":
+            !isSender,
           "animate-pulse": message.temp,
         }
       )}

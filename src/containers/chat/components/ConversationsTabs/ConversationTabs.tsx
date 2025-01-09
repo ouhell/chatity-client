@@ -31,7 +31,7 @@ const tabs: ConvoTab[] = [
 const ConversationTabs = () => {
   const [activeTab, setActiveTab] = React.useState(tabs[0]);
   return (
-    <div className="w-80">
+    <div className="w-80 shrink-0">
       <div className="flex justify-around items-center text-xl font-medium font-fun ">
         {tabs.map((tab) => {
           const isActive = tab.key === activeTab.key;
