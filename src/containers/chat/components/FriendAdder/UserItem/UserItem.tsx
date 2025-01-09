@@ -68,7 +68,7 @@ const UserItem = ({ data }: Props) => {
       </div>
       <div className="flex">
         {!!friendShip && !isLoadingFriends && (
-          <div className="flex items-center opacity-70">
+          <div className="flex items-center gap-2 opacity-70">
             <span>Friend</span>
             <span>
               <CheckCheck className="size-4" />
