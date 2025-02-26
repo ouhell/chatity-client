@@ -1,7 +1,8 @@
 // import useMessagePost from "@/hooks/api/mutations/useMessagePost";
 import { Paperclip, Send, Image } from "lucide-react";
 import React from "react";
-import RecordInput from "./RecordInput/RecordInput";
+import RecordInput, { RecordData } from "./RecordInput/RecordInput";
+import RecordingSheet from "./RecordingSheet/RecordingSheet";
 
 type Props = {
   onSendMsg: (content: string) => void;
@@ -10,9 +11,15 @@ type Props = {
 const PrivateConvoInputs = ({ onSendMsg }: Props) => {
   // const { mutateAsync: createMessage, isPending } = useMessagePost();
   const [messageContent, setMessageContent] = React.useState("");
-
+  const [recordData, setRecordData] = React.useState<RecordData>({
+    isRecording: false,
+  });
   return (
-    <div className="h-14 p-2 border-t shrink-0">
+    <div className="h-14 p-2 border-t shrink-0 relative">
+      <RecordingSheet
+        isRecording={recordData.isRecording}
+        stream={recordData.recorder?.stream}
+      />
       <div className="flex bg-slate-50 border rounded-r-3xl rounded-l-3xl relative h-12">
         <div className="w-full flex items-center px-4  gap-4 ">
           <div className="flex gap-2 items-center opacity-70 text-slate-700 shrink-0 overflow-hidden">
@@ -22,7 +29,12 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
             <button>
               <Image className="size-5" />
             </button>
-            <RecordInput />
+            <RecordInput
+              onRecordChange={(data) => {
+                console.log("receiving recordings", data);
+                setRecordData(data);
+              }}
+            />
           </div>
           <form
             autoComplete="off"
