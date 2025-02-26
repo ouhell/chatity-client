@@ -14,12 +14,21 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
   const [recordData, setRecordData] = React.useState<RecordData>({
     isRecording: false,
   });
+
+  const [recordBlob, setRecordBlob] = React.useState<Blob | null>(null);
+  const [attachedFiles, setAttachedFiles] = React.useState<File[] | null>(null);
+  const [attachedImages, setAttachedImages] = React.useState<File[] | null>(
+    null
+  );
+  const sendMessage = () => {
+    const trimmedContent = messageContent?.trim();
+    setMessageContent("");
+    if (!trimmedContent && !recordBlob) return;
+    onSendMsg(trimmedContent);
+    console.log("submiting", trimmedContent);
+  };
   return (
     <div className="h-14 p-2 border-t shrink-0 relative">
-      <RecordingSheet
-        isRecording={recordData.isRecording}
-        stream={recordData.recorder?.stream}
-      />
       <div className="flex bg-slate-50 border rounded-r-3xl rounded-l-3xl relative h-12">
         <div className="w-full flex items-center px-4  gap-4 ">
           <div className="flex gap-2 items-center opacity-70 text-slate-700 shrink-0 overflow-hidden">
@@ -34,43 +43,46 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
                 console.log("receiving recordings", data);
                 setRecordData(data);
               }}
+              onRecordComplete={(blob) => {
+                setRecordBlob(blob);
+              }}
             />
           </div>
-          <form
-            autoComplete="off"
-            onSubmit={(e) => {
-              e.preventDefault();
-              // const formData = new FormData(e.currentTarget);
-              // const messageContent = formData.get("message-content") as
-              //   | string
-              //   | undefined;
-              const trimmedContent = messageContent?.trim();
-              setMessageContent("");
-              if (!trimmedContent) return;
-              onSendMsg(trimmedContent);
-              console.log("submiting", trimmedContent);
-            }}
-            className="w-full"
-          >
-            <input
-              value={messageContent}
-              onChange={(e) => {
-                setMessageContent(e.target.value);
-              }}
-              name="message-content"
+          {!recordData.isRecording ? (
+            <form
               autoComplete="off"
-              placeholder="write message"
-              className="w-full bg-transparent focus-within:outline-none focus-within:border-none border-none font-fun text-xl"
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMessage();
+              }}
+              className="w-full"
+            >
+              <input
+                value={messageContent}
+                onChange={(e) => {
+                  setMessageContent(e.target.value);
+                }}
+                name="message-content"
+                autoComplete="off"
+                placeholder="write message"
+                className="w-full bg-transparent focus-within:outline-none focus-within:border-none border-none font-fun text-xl"
+              />
+            </form>
+          ) : (
+            <RecordingSheet
+              isRecording={recordData.isRecording}
+              stream={recordData.recorder?.stream}
             />
-          </form>
+          )}
         </div>
-
-        <button
-          type="submit"
-          className="absolute -right-0.5  top-0 bottom-0 w-12 text-slate-500 bg-white  hover:bg-slate-500 hover:text-white transition-colors rounded-full border  grid place-items-center"
-        >
-          <Send className="-translate-x-0.5 translate-y-0.5" />
-        </button>
+        <div className="w-10">
+          <button
+            type="submit"
+            className="absolute -right-0.5  top-0 bottom-0 w-12 text-slate-500 bg-white  hover:bg-slate-500 hover:text-white transition-colors rounded-full border  grid place-items-center"
+          >
+            <Send className="-translate-x-0.5 translate-y-0.5" />
+          </button>
+        </div>
       </div>
     </div>
   );
