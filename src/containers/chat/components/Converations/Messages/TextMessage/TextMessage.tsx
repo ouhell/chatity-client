@@ -18,10 +18,13 @@ const TextMessage = ({ data: message, user }: Props) => {
       })}
     >
       <div
+        style={{
+          transition: "border-radius 0.2s ease",
+        }}
         className={cn(
-          "border   p-2 max-w-[80%] bg-slate-50 font-fun text-xl text-center w-fit min-w-[4rem] ",
+          "border   py-2 px-4 max-w-[80%] break-words text-left bg-slate-50 font-fun text-xl  w-fit  ",
           {
-            " bg-slate-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl group-last:rounded-bl-none":
+            " bg-slate-600 text-white rounded-tl-2xl  rounded-bl-2xl rounded-tr-2xl group-last:rounded-tr-none group-last:rounded-br-2xl":
               isSender,
             "rounded-tl-2xl rounded-br-2xl rounded-tr-2xl  group-last:rounded-br-none":
               !isSender,

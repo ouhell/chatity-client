@@ -1,6 +1,7 @@
 // import useMessagePost from "@/hooks/api/mutations/useMessagePost";
-import { Paperclip, Send, Image, Mic } from "lucide-react";
+import { Paperclip, Send, Image } from "lucide-react";
 import React from "react";
+import RecordInput from "./RecordInput/RecordInput";
 
 type Props = {
   onSendMsg: (content: string) => void;
@@ -9,6 +10,7 @@ type Props = {
 const PrivateConvoInputs = ({ onSendMsg }: Props) => {
   // const { mutateAsync: createMessage, isPending } = useMessagePost();
   const [messageContent, setMessageContent] = React.useState("");
+
   return (
     <div className="h-14 p-2 border-t shrink-0">
       <div className="flex bg-slate-50 border rounded-r-3xl rounded-l-3xl relative h-12">
@@ -20,9 +22,7 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
             <button>
               <Image className="size-5" />
             </button>
-            <button>
-              <Mic className="size-5" />
-            </button>
+            <RecordInput />
           </div>
           <form
             autoComplete="off"
