@@ -15,6 +15,20 @@ type Props = {
 const RecordInput = ({ onRecordChange, onRecordComplete }: Props) => {
   const [isRecording, setIsRecording] = React.useState(false);
   const mediaRecorderRef = React.useRef<MediaRecorder | null>(null);
+  const recordTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
+  const stopRecording = () => {
+    if (mediaRecorderRef.current?.state === "recording") {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach((t) => t.stop());
+      mediaRecorderRef.current = null;
+      setIsRecording(false);
+    }
+    if (recordTimeoutRef.current) {
+      clearTimeout(recordTimeoutRef.current);
+    }
+  };
 
   async function startRecording() {
     try {
@@ -33,7 +47,9 @@ const RecordInput = ({ onRecordChange, onRecordComplete }: Props) => {
           chunks.push(e.data);
         }
       };
-
+      recordTimeoutRef.current = setTimeout(() => {
+        stopRecording();
+      }, 5000);
       // When recording stops, create audio blob and URL
       mediaRecorder.onstop = () => {
         const blob = new Blob(chunks, { type: "audio/webm" });
@@ -42,7 +58,6 @@ const RecordInput = ({ onRecordChange, onRecordComplete }: Props) => {
         //    { url: audioURL, date: new Date().toLocaleString() },
         //  ]);
         onRecordComplete?.(blob);
-        setIsRecording(false);
       };
 
       // Start the media recorder
@@ -54,15 +69,6 @@ const RecordInput = ({ onRecordChange, onRecordComplete }: Props) => {
       console.error("Error accessing microphone:", err);
     }
   }
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current?.state === "recording") {
-      mediaRecorderRef.current.stop();
-      mediaRecorderRef.current.stream.getTracks().forEach((t) => t.stop());
-
-      setIsRecording(false);
-    }
-  };
 
   React.useEffect(() => {
     onRecordChange?.({ isRecording, recorder: mediaRecorderRef.current });

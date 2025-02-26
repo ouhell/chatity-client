@@ -41,19 +41,27 @@ const RecordingSheet = ({ isRecording, stream }: Props) => {
     if (!dataArray) return;
     analyser.getByteTimeDomainData(dataArray);
 
-    ctx.fillStyle = "rgb(240, 240, 240)";
+    ctx.fillStyle = "#f8fafc";
     ctx.fillRect(0, 0, width, height);
 
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgb(0, 122, 255)";
+    ctx.strokeStyle = "rgb(128, 128, 128)";
     ctx.beginPath();
 
     const sliceWidth = width / dataArray.length;
     let x = 0;
 
+    const centerY = height / 2;
+
     for (let i = 0; i < dataArray.length; i++) {
-      const v = dataArray[i] / 128.0;
-      const y = v * (height / 2);
+      // Calculate normalized value (0-1) from the audio data (0-255)
+      const normalizedValue = (dataArray[i] - 128) / 128.0;
+
+      // Apply sensitivity reduction
+      const dampedValue = normalizedValue * 0.7;
+
+      // Calculate y position with reduced amplitude
+      const y = centerY + dampedValue * (height / 3); // Reduce amplitude by using height/3 instead of height/2
 
       if (i === 0) {
         ctx.moveTo(x, y);
@@ -64,7 +72,7 @@ const RecordingSheet = ({ isRecording, stream }: Props) => {
       x += sliceWidth;
     }
 
-    ctx.lineTo(width, height / 2);
+    ctx.lineTo(width, centerY);
     ctx.stroke();
 
     animationRef.current = requestAnimationFrame(drawWaveform);
@@ -81,10 +89,8 @@ const RecordingSheet = ({ isRecording, stream }: Props) => {
     }
   }, [isRecording, stream]);
   return (
-    <div className="fixed top-0 left-0 min-w-fit min-h-fit size-80 border">
-      {isRecording && (
-        <canvas width="400" height="100" ref={canvasRef}></canvas>
-      )}
+    <div className="bg-red-200 w-full h-full">
+      {isRecording && <canvas className="size-full" ref={canvasRef}></canvas>}
     </div>
   );
 };
