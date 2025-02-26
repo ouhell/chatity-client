@@ -14,6 +14,19 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
   const [recordData, setRecordData] = React.useState<RecordData>({
     isRecording: false,
   });
+
+  const [recordBlob, setRecordBlob] = React.useState<Blob | null>(null);
+  const [attachedFiles, setAttachedFiles] = React.useState<File[] | null>(null);
+  const [attachedImages, setAttachedImages] = React.useState<File[] | null>(
+    null
+  );
+  const sendMessage = () => {
+    const trimmedContent = messageContent?.trim();
+    setMessageContent("");
+    if (!trimmedContent && !recordBlob) return;
+    onSendMsg(trimmedContent);
+    console.log("submiting", trimmedContent);
+  };
   return (
     <div className="h-14 p-2 border-t shrink-0 relative">
       <div className="flex bg-slate-50 border rounded-r-3xl rounded-l-3xl relative h-12">
@@ -30,6 +43,9 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
                 console.log("receiving recordings", data);
                 setRecordData(data);
               }}
+              onRecordComplete={(blob) => {
+                setRecordBlob(blob);
+              }}
             />
           </div>
           {!recordData.isRecording ? (
@@ -37,15 +53,7 @@ const PrivateConvoInputs = ({ onSendMsg }: Props) => {
               autoComplete="off"
               onSubmit={(e) => {
                 e.preventDefault();
-                // const formData = new FormData(e.currentTarget);
-                // const messageContent = formData.get("message-content") as
-                //   | string
-                //   | undefined;
-                const trimmedContent = messageContent?.trim();
-                setMessageContent("");
-                if (!trimmedContent) return;
-                onSendMsg(trimmedContent);
-                console.log("submiting", trimmedContent);
+                sendMessage();
               }}
               className="w-full"
             >

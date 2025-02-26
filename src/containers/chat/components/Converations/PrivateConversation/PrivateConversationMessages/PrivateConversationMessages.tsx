@@ -43,7 +43,7 @@ const PrivateConversationMessages = ({ friendship, conversationId }: Props) => {
   }, [messages]);
   return (
     <div
-      className="h-full  max-h-full overflow-auto p-2 "
+      className="h-full  max-h-full overflow-auto px-2 pb-2 pt-4  "
       ref={messageContainerRef}
     >
       {!!messages?.length && (

@@ -1,3 +1,4 @@
+import { RECORDING_TIMEOUT } from "@/containers/chat/utils/constants";
 import { cn } from "@/utils/libs/classNames";
 import { Mic } from "lucide-react";
 import React from "react";
@@ -49,23 +50,17 @@ const RecordInput = ({ onRecordChange, onRecordComplete }: Props) => {
       };
       recordTimeoutRef.current = setTimeout(() => {
         stopRecording();
-      }, 5000);
+      }, RECORDING_TIMEOUT);
       // When recording stops, create audio blob and URL
       mediaRecorder.onstop = () => {
         const blob = new Blob(chunks, { type: "audio/webm" });
-        //  setAudioData([
-        //    ...audioData,
-        //    { url: audioURL, date: new Date().toLocaleString() },
-        //  ]);
+
         onRecordComplete?.(blob);
       };
 
-      // Start the media recorder
       mediaRecorder.start();
       setIsRecording(true);
-      //   drawWaveform();
     } catch (err) {
-      //    setError("Microphone access denied or not available");
       console.error("Error accessing microphone:", err);
     }
   }
